@@ -14,7 +14,7 @@ public class PlayerController : MonoBehaviour {
 	
 	void Start()
 	{
-		map = levelparser.ParseLevel ("test.txt");
+		//map = levelparser.ParseLevel ("test.txt");
 	}
 
 	// Update is called once per frame
