@@ -19,7 +19,7 @@ public class LevelParser : MonoBehaviour {
 	
 	}
 
-	void ParseLevel(string level)
+	public TileType[,] ParseLevel(string level)
 	{
 		try
 		{
@@ -60,6 +60,7 @@ public class LevelParser : MonoBehaviour {
 		{
 			//Debug.Log("{0}\n" + e.Message);
 		}
+		return levelMap;
 	}
 
 	/*void ParseTile(string[] entries) {
