@@ -5,6 +5,7 @@ public class PlayerController : MonoBehaviour {
 
 	//position is the real position, while move is a representive on-screen position
 	public Vector2 position;
+	public Vector2 direction;
 	public Mover targetPlayer;
 	public HealthSystem playerHP;
 	float move = 1.1f;
@@ -15,6 +16,7 @@ public class PlayerController : MonoBehaviour {
 	void Start()
 	{
 		//map = levelparser.ParseLevel ("test.txt");
+		direction = new Vector2(0.0f, 1.0f);
 	}
 
 	// Update is called once per frame
@@ -22,11 +24,12 @@ public class PlayerController : MonoBehaviour {
 	{
 		if(Input.GetKeyDown(KeyCode.W))
 		{
-			if(position.y - 1 >= 0)
+			direction = new Vector2(0.0f, 1.0f);
+			if(position.y - 1 >= 0 && !targetPlayer.isMoving)
 			{
 				if(map[(int)position.y - 1,(int)position.x] == TileType.EMPTY)
 				{
-					targetPlayer.MoveOneSquare(transform.position.x, transform.position.y + move);
+					StartCoroutine( targetPlayer.MoveOneSquare(transform.position.x, transform.position.y, direction));
 					position.y -= 1;
 				}
 			}
@@ -34,11 +37,12 @@ public class PlayerController : MonoBehaviour {
 
 		if(Input.GetKeyDown(KeyCode.S))
 		{
-			if(position.y + 1 < map.GetLength(0))
+			direction = new Vector2(0.0f, -1.0f);
+			if(position.y + 1 < map.GetLength(0) && !targetPlayer.isMoving)
 			{
 				if(map[(int)position.y + 1,(int)position.x] == TileType.EMPTY)
 				{
-					targetPlayer.MoveOneSquare(transform.position.x, transform.position.y - move);
+					StartCoroutine( targetPlayer.MoveOneSquare(transform.position.x, transform.position.y, direction));
 					position.y += 1;
 				}
 			}
@@ -46,11 +50,12 @@ public class PlayerController : MonoBehaviour {
 
 		if(Input.GetKeyDown(KeyCode.D))
 		{
-			if(position.x + 1 < map.GetLength(1))
+			direction = new Vector2(1.0f, 0.0f);
+			if(position.x + 1 < map.GetLength(1) && !targetPlayer.isMoving)
 			{
 				if(map[(int)position.y,(int)position.x + 1] == TileType.EMPTY)
 				{
-					targetPlayer.MoveOneSquare(transform.position.x + move, transform.position.y);
+					StartCoroutine( targetPlayer.MoveOneSquare(transform.position.x, transform.position.y, direction));
 					position.x += 1;
 				}
 			}
@@ -58,11 +63,12 @@ public class PlayerController : MonoBehaviour {
 
 		if(Input.GetKeyDown(KeyCode.A))
 		{
-			if(position.x - 1 >= 0)
+			direction = new Vector2(-1.0f, 0.0f);
+			if(position.x - 1 >= 0 && !targetPlayer.isMoving)
 			{
 				if(map[(int)position.y,(int)position.x - 1] == TileType.EMPTY)
 				{
-					targetPlayer.MoveOneSquare(transform.position.x - move, transform.position.y);
+					StartCoroutine( targetPlayer.MoveOneSquare(transform.position.x, transform.position.y, direction));
 					position.x -= 1;
 				}
 			}
