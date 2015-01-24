@@ -15,14 +15,14 @@ public class PlayerController : MonoBehaviour {
 	
 	void Start()
 	{
-		//map = levelparser.ParseLevel ("test.txt");
+		map = levelparser.ParseLevel ("test.txt");
 		direction = new Vector2(0.0f, 1.0f);
 	}
 
 	// Update is called once per frame
 	void LateUpdate () 
 	{
-		if(Input.GetKeyDown(KeyCode.W))
+		if(Input.GetKey(KeyCode.W))
 		{
 			direction = new Vector2(0.0f, 1.0f);
 			if(position.y - 1 >= 0 && !targetPlayer.isMoving)
@@ -35,7 +35,7 @@ public class PlayerController : MonoBehaviour {
 			}
 		}
 
-		if(Input.GetKeyDown(KeyCode.S))
+		if(Input.GetKey(KeyCode.S))
 		{
 			direction = new Vector2(0.0f, -1.0f);
 			if(position.y + 1 < map.GetLength(0) && !targetPlayer.isMoving)
@@ -48,7 +48,7 @@ public class PlayerController : MonoBehaviour {
 			}
 		}
 
-		if(Input.GetKeyDown(KeyCode.D))
+		if(Input.GetKey(KeyCode.D))
 		{
 			direction = new Vector2(1.0f, 0.0f);
 			if(position.x + 1 < map.GetLength(1) && !targetPlayer.isMoving)
@@ -61,7 +61,7 @@ public class PlayerController : MonoBehaviour {
 			}
 		}
 
-		if(Input.GetKeyDown(KeyCode.A))
+		if(Input.GetKey(KeyCode.A))
 		{
 			direction = new Vector2(-1.0f, 0.0f);
 			if(position.x - 1 >= 0 && !targetPlayer.isMoving)
