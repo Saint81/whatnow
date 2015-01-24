@@ -33,5 +33,7 @@ public class PlayerController : MonoBehaviour {
 			//transform.position = new Vector2(transform.position.x - move, transform.position.y);
 			targetPlayer.MoveOneSquare(transform.position.x - move, transform.position.y);
 		}
+
+		//if(Input.GetKey
 	}
 }
