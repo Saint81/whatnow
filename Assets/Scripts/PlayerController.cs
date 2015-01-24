@@ -4,6 +4,7 @@ using System.Collections;
 public class PlayerController : MonoBehaviour {
 
 	public Mover targetPlayer;
+	public HealthSystem playerHP;
 	float move = 1.0f;
 
 	// Update is called once per frame
