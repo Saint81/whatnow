@@ -38,6 +38,7 @@ public class DeathByHealthIsZero : MonoBehaviour {
 		}
 		gameObject.GetComponent<SpriteRenderer>().sprite = deathAnim[9];
 		yield return new WaitForSeconds(5);
-		//go to retry or quit screen
+		Application.LoadLevel(2);
 	}
 }
+

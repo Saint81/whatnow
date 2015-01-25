@@ -17,9 +17,10 @@ public class WinTrigger : MonoBehaviour {
 	void Update() 
 	{
 		//if player enters range, start coroutine
-		if((playerPos.position.y >= winRangeYMin || playerPos.position.y <= winRangeYMax) &&
-		   (playerPos.position.x >= winRangeXMin || playerPos.position.x <= winRangeXMax))
+		if((playerPos.position.y >= winRangeYMin && playerPos.position.y <= winRangeYMax) &&
+		   (playerPos.position.x >= winRangeXMin && playerPos.position.x <= winRangeXMax))
 		{
+			//.Log(playerPos.position);
 			StartCoroutine(winCondition.Death());
 		}
 	}
