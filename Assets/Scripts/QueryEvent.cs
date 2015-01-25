@@ -18,7 +18,7 @@ public class QueryEvent {
 	public EWaitMode waitMode;
 	public WWW wwwQuery;
 
-	public long iVoteResult;
+	public string voteResult;
 
 	public static QueryEvent query;
 
@@ -54,7 +54,7 @@ public class QueryEvent {
 			Debug.Log ("Query done!");
 			if( waitMode == EWaitMode.wmResponse )
 			{
-				iVoteResult = 0;
+				long iVoteResult = 0;
 				List<long> lResults = new List<long>();
 				waitMode = EWaitMode.wmHasResults;
 				string[] lExtents = wwwQuery.text.Split(';');
@@ -70,7 +70,10 @@ public class QueryEvent {
 					lResults.Add(nVotes);
 					if( nVotes > lResults[(int)iVoteResult] ||
 					    nVotes == lResults[(int)iVoteResult] && ((rand.Next() & 1) != 0))
+					{
 						iVoteResult = i;
+						voteResult = lExtents[i].Substring(0, iEquals);
+					}
 				}
 			}
 			else
@@ -110,6 +113,9 @@ public class QueryEvent {
 		uint nItems = 0;
 		foreach(LevelParser.SActiveItem item in _lItems)
 		{
+			if( !item.isFirst || item.noSabotage )
+				continue;
+
 			queryString += "&response" + System.Convert.ToString (nItems);
 			queryString += "=" + item.name;
 			nItems++;
@@ -118,11 +124,5 @@ public class QueryEvent {
 		wwwQuery = new WWW (queryString);
 		Debug.Log ("sent query " + queryString);
 		waitMode = EWaitMode.wmQuery;
-	}
-
-	public int GrabResults()
-	{
-		waitMode = EWaitMode.wmNone;
-		return (int)iVoteResult;
 	}
 }

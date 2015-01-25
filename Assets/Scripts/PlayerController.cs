@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -158,9 +158,7 @@ public class PlayerController : MonoBehaviour {
 				}
 
 				LevelParser.SActiveItem pickedItem = lActiveItems[iActiveItem];
-				Debug.Log("Activated " + pickedItem.name);
-				if( iActiveItem == QueryEvent.query.iVoteResult )
-					Debug.Log("BOOM!");
+				TriggerHandler.HandleAction (pickedItem.name, pickedItem.name == QueryEvent.query.voteResult, x, y);
 			}
 
 			actionHeld = true;

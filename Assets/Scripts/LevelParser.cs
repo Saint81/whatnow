@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
@@ -13,6 +13,8 @@ public class LevelParser : MonoBehaviour {
     {
         public int x,y;
         public string name;
+		public bool noSabotage;
+		public bool isFirst;
     };
 
     public List<SActiveItem>    lActiveItems;
@@ -77,6 +79,16 @@ public class LevelParser : MonoBehaviour {
 						newItem.name = lItem[0];
 						newItem.x = System.Convert.ToInt16(lItem[1]);
 						newItem.y = System.Convert.ToInt16(lItem[2]);
+						newItem.noSabotage = (newItem.name == "Sign");
+						newItem.isFirst = true;
+						foreach(SActiveItem item in lActiveItems)
+						{
+							if(item.name == newItem.name)
+								continue;
+
+							newItem.isFirst = false;
+							break;
+						}
 						lActiveItems.Add (newItem);
 					}
 				}
