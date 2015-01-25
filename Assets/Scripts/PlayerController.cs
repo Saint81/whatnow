@@ -5,8 +5,10 @@ using System.Collections.Generic;
 public class PlayerController : MonoBehaviour {
 
 	//position is the real position, while move is a representive on-screen position
+	public Camera mainCamera;
 	public Vector2 position;
 	public Vector2 direction;
+	public Vector2 mCurrentRoom;
 	public Mover targetPlayer;
 	public HealthSystem playerHP;
 	public GameObject target;
@@ -26,6 +28,7 @@ public class PlayerController : MonoBehaviour {
 		QueryEvent.query = new QueryEvent();
 		QueryEvent.query.Activate(5.0f, levelparser.lActiveItems);
 		direction = new Vector2(0.0f, 1.0f);
+		mCurrentRoom = spawn.currentRoom;
 		actionHeld = true;
 	}
 
@@ -123,6 +126,13 @@ public class PlayerController : MonoBehaviour {
 			transform.localScale = new Vector3(1.0f, 1.0f, 1.0f);
 		}
 
+		if(mCurrentRoom != spawn.currentRoom)
+		{
+			//StartCoroutine(SwitchScene());
+			Camera.main.transform.position = new Vector3(spawn.currentRoom.x * spawn.mapOffset , spawn.currentRoom.y * spawn.mapOffset, -10.0f);
+			mCurrentRoom = spawn.currentRoom;
+		}
+
 		if(Input.GetKey (KeyCode.Space))
 		{
 			int x = (int)(position.x + direction.x);
@@ -159,4 +169,20 @@ public class PlayerController : MonoBehaviour {
 		else
 			actionHeld = false;
 	}
+
+	/*IEnumerator SwitchScene()
+	{
+		float time = 0.0f;
+		Vector3 oldCoord = new Vector3(mCurrentRoom.x, mCurrentRoom.y, -10.0f);
+		Vector3 newCoord = new Vector3(spawn.currentRoom.x, spawn.currentRoom.y, -10.0f);
+		mCurrentRoom = spawn.currentRoom;
+		while(time < 1.0f);
+		{
+			Debug.Log("Lerp? more like DERP!!");
+			
+			mainCamera.transform.position.y = Mathf.Lerp(oldCoord.y * spawn.mapOffset, newCoord.y * spawn.mapOffset, time);
+			time += 0.1f;
+			yield return null;
+		}
+	}*/
 }
