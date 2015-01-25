@@ -7,7 +7,10 @@ public class MapSpawnerScript : MonoBehaviour {
     public Vector2 currentRoom;
     public GameObject[] roomList;
 	public List<Level> levelList;
+	public Level nextLevel;
+	public GameObject nextLevelObject;
 	public bool isNewLevel;
+
 	// Use this for initialization
 	void Start () {
         //initialize first room;
@@ -22,12 +25,14 @@ public class MapSpawnerScript : MonoBehaviour {
 			GameObject temp = (GameObject)Instantiate(roomList[0], new Vector3(currentRoom.x * mapOffset, currentRoom.y * mapOffset), Quaternion.identity);
 			levelList.Add(new Level(new Vector2(currentRoom.x, currentRoom.y),temp.GetComponent<RoomProperties>().mapFile));
 			isNewLevel = true;
+			GenerateNextRoom();
 		}
 	}
 	// Update is called once per frame
 	void Update () {
 	    
 	}
+
 	public string getCurrentRoomMap()
 	{
 		if(levelList != null)
@@ -45,6 +50,20 @@ public class MapSpawnerScript : MonoBehaviour {
 		}
 		return "ERROR";
 	}
+
+	void GenerateNextRoom()
+	{
+		QueryEvent.Get().CloseQuery();
+		int rand = Random.Range(2, roomList.GetLength(0));
+		nextLevelObject = (GameObject)Instantiate(roomList[rand], new Vector3(0 * mapOffset, 0 * mapOffset), Quaternion.identity);
+		nextLevel = new Level(new Vector2(0,0), nextLevelObject.GetComponent<RoomProperties>().mapFile);
+	
+		// Need to parse level to send query
+		LevelItemParser parser = new LevelItemParser();
+		parser.ParseLevel(nextLevel.mLevelMap);	
+		QueryEvent.Get().Activate(5.0f, parser.lActiveItems);
+	}
+
 	public void moveRoom(dir d)
 	{
 		int nLevelsOld = levelList.Count;
@@ -65,9 +84,16 @@ public class MapSpawnerScript : MonoBehaviour {
 			if(!exist)
 			{
 				//make new room
+				/*
 				int rand = Random.Range(0, roomList.GetLength(0));
 				GameObject temp = (GameObject)Instantiate(roomList[rand], new Vector3(currentRoom.x * mapOffset, (currentRoom.y + 1) * mapOffset), Quaternion.identity);
 				levelList.Add(new Level(new Vector2(currentRoom.x, currentRoom.y + 1),temp.GetComponent<RoomProperties>().mapFile));
+				*/
+				nextLevel.mCoords.x = currentRoom.x;
+				nextLevel.mCoords.y = currentRoom.y + 1;
+				nextLevelObject.gameObject.transform.position = new Vector3(currentRoom.x * mapOffset, (currentRoom.y + 1) * mapOffset);
+				levelList.Add (nextLevel);
+				GenerateNextRoom();
 				currentRoom.y++;
 			}else{
 				currentRoom.y++;
@@ -88,9 +114,11 @@ public class MapSpawnerScript : MonoBehaviour {
 			if(!exist)
 			{
 				//make new room
-				int rand = Random.Range(0, roomList.GetLength(0));
-				GameObject temp = (GameObject)Instantiate(roomList[rand], new Vector3(currentRoom.x * mapOffset, (currentRoom.y - 1) * mapOffset), Quaternion.identity);
-				levelList.Add(new Level(new Vector2(currentRoom.x, currentRoom.y - 1),temp.GetComponent<RoomProperties>().mapFile));
+				nextLevel.mCoords.x = currentRoom.x;
+				nextLevel.mCoords.y = currentRoom.y - 1;
+				nextLevelObject.gameObject.transform.position = new Vector3(currentRoom.x * mapOffset, (currentRoom.y - 1) * mapOffset);
+				levelList.Add (nextLevel);
+				GenerateNextRoom();
 				currentRoom.y--;
 			}else{
 				currentRoom.y--;
@@ -111,9 +139,11 @@ public class MapSpawnerScript : MonoBehaviour {
 			if(!exist)
 			{
 				//make new room
-				int rand = Random.Range(0, roomList.GetLength(0));
-				GameObject temp = (GameObject)Instantiate(roomList[rand], new Vector3((currentRoom.x - 1) * mapOffset, (currentRoom.y) * mapOffset), Quaternion.identity);
-				levelList.Add(new Level(new Vector2(currentRoom.x - 1, currentRoom.y ),temp.GetComponent<RoomProperties>().mapFile));
+				nextLevel.mCoords.x = currentRoom.x-1;
+				nextLevel.mCoords.y = currentRoom.y;
+				nextLevelObject.gameObject.transform.position = new Vector3((currentRoom.x - 1) * mapOffset, currentRoom.y * mapOffset);
+				levelList.Add (nextLevel);
+				GenerateNextRoom();
 				currentRoom.x--;
 			}else{
 				currentRoom.x--;
@@ -134,9 +164,11 @@ public class MapSpawnerScript : MonoBehaviour {
 			if(!exist)
 			{
 				//make new room
-				int rand = Random.Range(0, roomList.GetLength(0));
-				GameObject temp = (GameObject)Instantiate(roomList[rand], new Vector3((currentRoom.x + 1) * mapOffset, (currentRoom.y) * mapOffset), Quaternion.identity);
-				levelList.Add(new Level(new Vector2(currentRoom.x + 1, currentRoom.y ),temp.GetComponent<RoomProperties>().mapFile));
+				nextLevel.mCoords.x = currentRoom.x+1;
+				nextLevel.mCoords.y = currentRoom.y;
+				nextLevelObject.gameObject.transform.position = new Vector3((currentRoom.x + 1) * mapOffset, currentRoom.y * mapOffset);
+				levelList.Add (nextLevel);
+				GenerateNextRoom();
 				currentRoom.x++;
 			}else{
 				currentRoom.x++;

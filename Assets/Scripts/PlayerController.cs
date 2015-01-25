@@ -24,8 +24,6 @@ public class PlayerController : MonoBehaviour {
 		spawn.initialize();
 		UpdateLevel();
 		target.GetComponent<SpriteRenderer>().sprite = targetPlayer.walkAnim[0];
-		QueryEvent.query = new QueryEvent();
-		QueryEvent.query.Activate(5.0f, levelparser.lActiveItems);
 		direction = new Vector2(0.0f, 1.0f);
 		mCurrentRoom = spawn.currentRoom;
 		actionHeld = true;
@@ -42,12 +40,7 @@ public class PlayerController : MonoBehaviour {
 	// Update is called once per frame
 	void LateUpdate () 
 	{
-		
-		if( QueryEvent.query.IsActive() )
-		{
-			QueryEvent.query.Update();
-			return;
-		}
+		QueryEvent.Get().Update();
 
 		if(Input.GetKey(KeyCode.W) && !targetPlayer.isMoving)
 		{
@@ -181,6 +174,8 @@ public class PlayerController : MonoBehaviour {
 					hasTriggeredTrap = pickedItem.name == QueryEvent.query.voteResult;
 					TriggerHandler.HandleAction (pickedItem.name, hasTriggeredTrap, x, y);
 					Debug.Log (pickedItem.name + " ACTION!");
+					if( hasTriggeredTrap )
+						Debug.Log ("BOOBYTRAPPED!");
 
 					// Unmark map
 					map[itemY, itemX] = TileType.BLOCK;

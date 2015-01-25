@@ -83,7 +83,7 @@ public class LevelParser : MonoBehaviour {
 						newItem.isFirst = true;
 						foreach(SActiveItem item in lActiveItems)
 						{
-							if(item.name == newItem.name)
+							if(item.name != newItem.name)
 								continue;
 
 							newItem.isFirst = false;
