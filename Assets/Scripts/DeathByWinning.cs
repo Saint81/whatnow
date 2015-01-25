@@ -30,6 +30,7 @@ public class DeathByWinning : MonoBehaviour {
 		}
 		gameObject.GetComponent<SpriteRenderer>().sprite = bloodyMess[3];
 		yield return new WaitForSeconds(5);
+		QueryEvent.Get().Cleanup();
 		Application.LoadLevel(3);
 	}
 }
