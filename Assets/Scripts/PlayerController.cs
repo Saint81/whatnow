@@ -8,7 +8,7 @@ public class PlayerController : MonoBehaviour {
 	public Vector2 direction;
 	public Mover targetPlayer;
 	public HealthSystem playerHP;
-	float move = 1.1f;
+	public GameObject target;
 
 	public LevelParser levelparser;
 	public TileType[,] map;
@@ -18,6 +18,7 @@ public class PlayerController : MonoBehaviour {
 	void Start()
 	{
 		map = levelparser.ParseLevel ("test.txt");
+		target.GetComponent<SpriteRenderer>().sprite = targetPlayer.walkAnim[0];
 		QueryEvent.query = new QueryEvent();
 		QueryEvent.query.Activate(10.0f, levelparser.lActiveItems);
 		direction = new Vector2(0.0f, 1.0f);
@@ -40,6 +41,7 @@ public class PlayerController : MonoBehaviour {
 				if(map[(int)position.y - 1,(int)position.x] == TileType.EMPTY)
 				{
 					StartCoroutine( targetPlayer.MoveOneSquare(transform.position.x, transform.position.y, direction));
+					target.GetComponent<SpriteRenderer>().sprite = targetPlayer.walkUpAnim[0];
 					position.y -= 1;
 				}
 			}
@@ -53,6 +55,7 @@ public class PlayerController : MonoBehaviour {
 				if(map[(int)position.y + 1,(int)position.x] == TileType.EMPTY)
 				{
 					StartCoroutine( targetPlayer.MoveOneSquare(transform.position.x, transform.position.y, direction));
+					target.GetComponent<SpriteRenderer>().sprite = targetPlayer.walkAnim[0];
 					position.y += 1;
 				}
 			}
@@ -66,6 +69,7 @@ public class PlayerController : MonoBehaviour {
 				if(map[(int)position.y,(int)position.x + 1] == TileType.EMPTY)
 				{
 					StartCoroutine( targetPlayer.MoveOneSquare(transform.position.x, transform.position.y, direction));
+					target.GetComponent<SpriteRenderer>().sprite = targetPlayer.walkSideAnim[0];
 					position.x += 1;
 				}
 			}
@@ -79,6 +83,7 @@ public class PlayerController : MonoBehaviour {
 				if(map[(int)position.y,(int)position.x - 1] == TileType.EMPTY)
 				{
 					StartCoroutine( targetPlayer.MoveOneSquare(transform.position.x, transform.position.y, direction));
+					target.GetComponent<SpriteRenderer>().sprite = targetPlayer.walkSideAnim[0];
 					position.x -= 1;
 				}
 			}
