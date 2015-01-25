@@ -10,10 +10,8 @@ public class HealthSystem : MonoBehaviour {
 	public int mtools = 10;
 	public int mweapons = 10;
 	public DeathByHealthIsZero dying;
-<<<<<<< HEAD
 	private float oldtime = 0;
 	private float newtime;
-=======
 
 	bool winCondActive = false;
 	DeathByWinning explode;
@@ -29,7 +27,7 @@ public class HealthSystem : MonoBehaviour {
 	{
 		HP -= damage;
 	}
->>>>>>> origin/master
+
 
 	void Update()
 	{
@@ -43,16 +41,7 @@ public class HealthSystem : MonoBehaviour {
 			//Destroy(this.gameObject);
 			StartCoroutine(dying.Death());
 		}
-<<<<<<< HEAD
-		if(HP > 100)
-			HP = 100;
-		if(Hunger > 100)
-			Hunger = 100;
-		if(stools > mtools)
-			stools = mtools;
-		if(sweapons > mweapons)
-			sweapons = mweapons;
-=======
+		
 
 		if((stools == mtools && sweapons == mweapons) && !winCondActive)
 		{
@@ -60,6 +49,6 @@ public class HealthSystem : MonoBehaviour {
 			explode.enabled = true;
 			winTrig.enabled = true;
 		}
->>>>>>> origin/master
+
 	}
 }
