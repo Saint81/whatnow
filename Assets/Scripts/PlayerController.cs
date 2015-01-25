@@ -9,35 +9,22 @@ public class PlayerController : MonoBehaviour {
 	public Vector2 direction;
 	public Mover targetPlayer;
 	public HealthSystem playerHP;
-<<<<<<< HEAD
 	public GameObject target;
 	public MapSpawnerScript spawn;
-=======
-	float move = 1.1f;
 	public bool actionHeld;
-
->>>>>>> b1d401c68505d75a5ec28cd81cdd2c88672846b3
 	public LevelParser levelparser;
 	public List<LevelParser.SActiveItem> lActiveItems;
 	public TileType[,] map;
-
 	public static bool isWaitingForAudience;
 	
 	void Start()
 	{
-<<<<<<< HEAD
 		spawn.initialize();
 		map = levelparser.ParseLevel(spawn.getCurrentRoomMap());
-
 		target.GetComponent<SpriteRenderer>().sprite = targetPlayer.walkAnim[0];
-		QueryEvent.query = new QueryEvent();
-		QueryEvent.query.Activate(10.0f, levelparser.lActiveItems);
-=======
-		map = levelparser.ParseLevel ("test.txt");
 		lActiveItems = levelparser.lActiveItems;
 		QueryEvent.query = new QueryEvent();
 		QueryEvent.query.Activate(5.0f, levelparser.lActiveItems);
->>>>>>> b1d401c68505d75a5ec28cd81cdd2c88672846b3
 		direction = new Vector2(0.0f, 1.0f);
 		actionHeld = true;
 	}
@@ -52,10 +39,9 @@ public class PlayerController : MonoBehaviour {
 			return;
 		}
 
-		if(Input.GetKey(KeyCode.W))
+		if(Input.GetKey(KeyCode.W) && !targetPlayer.isMoving)
 		{
 			direction = new Vector2(0.0f, -1.0f);
-<<<<<<< HEAD
 			if(position.y - 1 >= 0 && map[(int)position.y - 1,(int)position.x] == TileType.EMPTY)
 			{
 				StartCoroutine( targetPlayer.MoveOneSquare(transform.position.x, transform.position.y, -direction));
@@ -68,37 +54,17 @@ public class PlayerController : MonoBehaviour {
 				map = levelparser.ParseLevel(newMap);
 				StartCoroutine(targetPlayer.MoveOneSquare(transform.position.x, transform.position.y, -direction));
 				position.y = 17;
-
-=======
-			if(position.y - 1 >= 0 && !targetPlayer.isMoving)
-			{
-				if(map[(int)position.y - 1,(int)position.x] == TileType.EMPTY)
-				{
-					StartCoroutine( targetPlayer.MoveOneSquare(transform.position.x, transform.position.y, -direction));
-					position.y -= 1;
-				}
->>>>>>> b1d401c68505d75a5ec28cd81cdd2c88672846b3
 			}
+			target.GetComponent<SpriteRenderer>().sprite = targetPlayer.walkUpAnim[0];
 		}
 
 		if(Input.GetKey(KeyCode.S) && !targetPlayer.isMoving)
 		{
-<<<<<<< HEAD
-			direction = new Vector2(0.0f, -1.0f);
+			direction = new Vector2(0.0f, 1.0f);
 			if(position.y + 1 < map.GetLength(0) && map[(int)position.y + 1,(int)position.x] == TileType.EMPTY)
 			{
-				StartCoroutine( targetPlayer.MoveOneSquare(transform.position.x, transform.position.y, direction));
+				StartCoroutine( targetPlayer.MoveOneSquare(transform.position.x, transform.position.y, -direction));
 				position.y += 1;
-=======
-			direction = new Vector2(0.0f, 1.0f);
-			if(position.y + 1 < map.GetLength(0) && !targetPlayer.isMoving)
-			{
-				if(map[(int)position.y + 1,(int)position.x] == TileType.EMPTY)
-				{
-					StartCoroutine( targetPlayer.MoveOneSquare(transform.position.x, transform.position.y, -direction));
-					position.y += 1;
-				}
->>>>>>> b1d401c68505d75a5ec28cd81cdd2c88672846b3
 			}
 			else if((position.x <= 10 && position.x >= 7) && position.y == 17)
 			{
@@ -106,7 +72,7 @@ public class PlayerController : MonoBehaviour {
 				spawn.moveRoom(dir.DOWN);
 				string newMap = spawn.getCurrentRoomMap();
 				map = levelparser.ParseLevel(newMap);
-				StartCoroutine(targetPlayer.MoveOneSquare(transform.position.x, transform.position.y, direction));
+				StartCoroutine(targetPlayer.MoveOneSquare(transform.position.x, transform.position.y, -direction));
 				position.y = 0;
 				
 			}
@@ -118,16 +84,8 @@ public class PlayerController : MonoBehaviour {
 			direction = new Vector2(1.0f, 0.0f);
 			if(position.x + 1 < map.GetLength(1) && map[(int)position.y,(int)position.x + 1] == TileType.EMPTY)
 			{
-<<<<<<< HEAD
 				StartCoroutine( targetPlayer.MoveOneSquare(transform.position.x, transform.position.y, direction));
 				position.x += 1;
-=======
-				if(map[(int)position.y,(int)position.x + 1] == TileType.EMPTY)
-				{
-					StartCoroutine( targetPlayer.MoveOneSquare(transform.position.x, transform.position.y, direction));
-					position.x += 1;
-				}
->>>>>>> b1d401c68505d75a5ec28cd81cdd2c88672846b3
 			}
 			else if((position.y <= 10 && position.y >= 7) && position.x == 17)
 			{
@@ -148,16 +106,8 @@ public class PlayerController : MonoBehaviour {
 			direction = new Vector2(-1.0f, 0.0f);
 			if(position.x - 1 >= 0 && map[(int)position.y,(int)position.x - 1] == TileType.EMPTY)
 			{
-<<<<<<< HEAD
 				StartCoroutine( targetPlayer.MoveOneSquare(transform.position.x, transform.position.y, direction));
 				position.x -= 1;
-=======
-				if(map[(int)position.y,(int)position.x - 1] == TileType.EMPTY)
-				{
-					StartCoroutine( targetPlayer.MoveOneSquare(transform.position.x, transform.position.y, direction));
-					position.x -= 1;
-				}
->>>>>>> b1d401c68505d75a5ec28cd81cdd2c88672846b3
 			}
 			else if((position.y <= 10 && position.y >= 7) && position.x == 0)
 			{
@@ -173,9 +123,6 @@ public class PlayerController : MonoBehaviour {
 			transform.localScale = new Vector3(1.0f, 1.0f, 1.0f);
 		}
 
-<<<<<<< HEAD
-		//if(Input.GetKey
-=======
 		if(Input.GetKey (KeyCode.Space))
 		{
 			int x = (int)(position.x + direction.x);
@@ -211,6 +158,5 @@ public class PlayerController : MonoBehaviour {
 		}
 		else
 			actionHeld = false;
->>>>>>> b1d401c68505d75a5ec28cd81cdd2c88672846b3
 	}
 }

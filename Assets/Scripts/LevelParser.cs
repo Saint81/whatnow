@@ -58,6 +58,7 @@ public class LevelParser : MonoBehaviour {
                         string[] tile = line.Split(' ');
                         for(int j = 0; j < levelMap.GetLength(1) /*width*/; j++)
                         {
+				
                             levelMap[i, j] = (TileType)int.Parse(tile[j]);
 						
                         }
