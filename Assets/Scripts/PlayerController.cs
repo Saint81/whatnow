@@ -18,28 +18,21 @@ public class PlayerController : MonoBehaviour {
 	void Start()
 	{
 		map = levelparser.ParseLevel ("test.txt");
-<<<<<<< HEAD
 		QueryEvent.query = new QueryEvent();
 		QueryEvent.query.Activate(10.0f, levelparser.lActiveItems);
-=======
 		direction = new Vector2(0.0f, 1.0f);
->>>>>>> origin/master
 	}
 
 	// Update is called once per frame
 	void LateUpdate () 
 	{
-<<<<<<< HEAD
 		if( QueryEvent.query.IsActive() )
 		{
 			QueryEvent.query.Update();
 			return;
 		}
 
-		if(Input.GetKeyDown(KeyCode.W))
-=======
 		if(Input.GetKey(KeyCode.W))
->>>>>>> origin/master
 		{
 			direction = new Vector2(0.0f, 1.0f);
 			if(position.y - 1 >= 0 && !targetPlayer.isMoving)
