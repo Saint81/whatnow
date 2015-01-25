@@ -128,7 +128,6 @@ public class PlayerController : MonoBehaviour {
 
 		if(mCurrentRoom != spawn.currentRoom)
 		{
-			//StartCoroutine(SwitchScene());
 			Camera.main.transform.position = new Vector3(spawn.currentRoom.x * spawn.mapOffset , spawn.currentRoom.y * spawn.mapOffset, -10.0f);
 			mCurrentRoom = spawn.currentRoom;
 		}
@@ -178,9 +177,8 @@ public class PlayerController : MonoBehaviour {
 		mCurrentRoom = spawn.currentRoom;
 		while(time < 1.0f);
 		{
-			Debug.Log("Lerp? more like DERP!!");
 			
-			mainCamera.transform.position.y = Mathf.Lerp(oldCoord.y * spawn.mapOffset, newCoord.y * spawn.mapOffset, time);
+			mainCamera.transform.position.y = Vector3.Lerp(oldCoord.y * spawn.mapOffset, newCoord.y * spawn.mapOffset, time);
 			time += 0.1f;
 			yield return null;
 		}
