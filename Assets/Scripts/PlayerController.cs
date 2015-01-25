@@ -142,8 +142,9 @@ public class PlayerController : MonoBehaviour {
 			int itemX = x;
 			int itemY = y;
 
-			if( lActiveItems == null )
+			if( !actionHeld && lActiveItems == null )
 			{
+				Debug.Log("EMPTY ROOM ACTION!");
 				TriggerHandler.HandleActionInEmptyRoom();
 			}
 		
@@ -171,11 +172,15 @@ public class PlayerController : MonoBehaviour {
 
 				LevelParser.SActiveItem pickedItem = lActiveItems[iActiveItem];
 				if( hasTriggeredTrap )
+				{
 					TriggerHandler.HandleActionPostTrapTrigger();
+					Debug.Log ("TRAP ROOM ACTION!");
+				}
 				else
 				{
 					hasTriggeredTrap = pickedItem.name == QueryEvent.query.voteResult;
 					TriggerHandler.HandleAction (pickedItem.name, hasTriggeredTrap, x, y);
+					Debug.Log (pickedItem.name + " ACTION!");
 
 					// Unmark map
 					map[itemY, itemX] = TileType.BLOCK;
