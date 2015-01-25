@@ -1,48 +1,10 @@
 <?php
 
-$id = $_GET['id'];
-$fileName = "data/" . $id . ".txt";
-$oldFile = "data/" . $id . ".old";
-if( isset($_GET['query']) )
+
+function readWhatNowLog($_fileName, &$_responses)
 {
-	unlink($oldFile);
-	for( $i = 0; $i < 10; $i++ )
-	{
-		$f = fopen($fileName, "wb");
-		if( $f !== FALSE )
-			break;
-	}
-	if( $i >= 10 )
-	{
-		die("FAIL" . $fileName);
-	}
-	
-	fwrite($f, $_GET['query'] . ";");
-	$index = 0;
-	while( isset($_GET["response".$index]) )
-	{
-		fwrite($f, $_GET["response".$index] . ";0;");
-		$index++;
-	}
-	fclose($f);
-	
-	echo "SUCCESS";
-}
-else
-{
-	$isOld = false;
-	$hasQuery = true;
-	if( file_exists($fileName) )
-		$f = fopen($fileName, "rb") or die("FAIL (read)");
-	else if( file_exists($oldFile) )
-	{
-		$f = fopen($oldFile, "rb") or die("FAIL (read)");
-		$isOld = true;
-	}
-	else
-	{
-		$hasQuery = false;
-	}
+	if( file_exists($_fileName) )
+		$f = fopen($_fileName, "rb");
 	
 	if( isset($f) )
 	{
@@ -73,16 +35,55 @@ else
 			}
 			
 			$rd = fread($f, 1);
-			$responses[$response] = $value;
+			$_responses[$response] = $value;
 		}
 		
 		fclose($f);
 	}
+	else return false;
+	
+	return true;
+}
+
+
+$id = $_GET['id'];
+$fileName = "data/" . $id . ".txt";
+$oldFile = "data/" . $id . ".old";
+$cleanup = isset($_GET['cleanup']);
+if( isset($_GET['query']) )
+{
+	for( $i = 0; $i < 10; $i++ )
+	{
+		$f = fopen($fileName, "wb");
+		if( $f !== FALSE )
+			break;
+	}
+	if( $i >= 10 )
+	{
+		die("FAIL" . $fileName);
+	}
+	
+	fwrite($f, $_GET['query'] . ";");
+	$index = 0;
+	while( isset($_GET["response".$index]) )
+	{
+		fwrite($f, $_GET["response".$index] . ";0;");
+		$index++;
+	}
+	fclose($f);
+	
+	echo "SUCCESS";
+}
+else if( !$cleanup )
+{
+	$hasQuery = true;
+	if( !readWhatNowLog($fileName, $responses) )
+		$hasQuery = false;
 }
 
 if( isset($_GET['getresponse']) )
 {
-	if( !$isOld )
+	if( $hasQuery )
 	{
 		unlink($fileName);
 		
@@ -106,7 +107,16 @@ if( isset($_GET['getresponse']) )
 		}
 
 		// write old file
-		$f = fopen($oldFile, "wb") or die("FAIL (write old)");
+		for( $i = 0; $i < 10; $i++ )
+		{
+			$f = fopen($oldFile, "wb");
+			if( $f !== FALSE )
+				break;
+		}
+		if( $i >= 10 )
+		{
+			die("FAIL" . $fileName);
+		}
 		fwrite($f, $queryName . ";");
 		
 		foreach( $responses as $key => $value )
@@ -117,19 +127,54 @@ if( isset($_GET['getresponse']) )
 		fclose($f);
 	}
 }
+else if( $cleanup )
+{
+	if ($handle = opendir('data')) {
+		while (false !== ($entry = readdir($handle))) {
+			if (strpos($entry, $id) === false)
+				continue;
+			
+			$nameEnd = strpos($entry, "#");
+				
+			$startPos = strlen($id);
+			$ID = substr($entry, $startPos, $nameEnd - $startPos);
+			
+			if( isset($responses[$ID]) )
+				$responses[$ID] ++;
+				
+			unlink('data/' . $entry);
+		}
+		
+		closedir($handle);
+	}
+}
 else if( !isset($_GET['query']) )
 {
+	$oldCount = -1;
+	if(readWhatNowLog($oldFile, $oldResponses))
+	{
+		foreach( $oldResponses as $key => $value )
+		{
+			if( $value > $oldCount )
+			{
+				$oldCount = $value;
+				$oldWinner = $key;
+			}
+			else if( $value == $oldCount )
+				$oldWinner = "UNDECIDED";
+		}
+	}
 
 	echo '<!DOCTYPE html><html><head>';
 	echo '<link type="text/css" rel="stylesheet" href="stylesheet.css"/>';
 	
 	$isButton = isset($_GET['button']);
-	if( !isButton || !$isOld )
+	if( !isButton || !$hasQuery )
 		echo '<meta http-equiv="refresh" content="4; URL=http://www.backworlds.com/whatnow/?id=' . $id . '" />';
 
 	if( $isButton )
 	{
-		if( isset($responses[$_GET['button']]) && !$isOld )
+		if( isset($responses[$_GET['button']]) && $hasQuery )
 		{
 			// Create new file with ID and response
 			$voteName = "data/" . $id . $_GET['button'] . "#" . $_SERVER['REMOTE_ADDR'];
@@ -161,32 +206,15 @@ else if( !isset($_GET['query']) )
 		echo '<div class="all">';
 		echo '<div class="main">';
 
-		if( $isOld )
-		{
-			echo '<h1>YOUR COOPERATION IS CORRECT</h1>';
-			echo '<div id="menu">';
-			echo '<div id="menu">';
-			echo '<h1>VOTE RESULTS</h1>';
-			
-			foreach( $responses as $key => $value )
-			{
-				echo '<h2>' . $key . ' >> ' . $value . '</h2>';
-			}
-			
-			echo '</div>';
-		}
-		else
-		{        
-			echo '<h1>WHAT DO WE DO NOW?</h1>';
-			echo '<div id="menu">';
-			echo '<div id="picture">';
+		echo '<h1>WHAT DO WE DO NOW?</h1>';
+		echo '<div id="menu">';
+		echo '<div id="picture">';
             // echo '<img src="img/pic_1.png">';
-			echo '</div>';
-			echo '<h1>VOTE NOW</h1>';
-			foreach( $responses as $key => $value )
-			{
-				echo '<h2><a href="http://www.backworlds.com/whatnow/index.php?id=' . $id . '&button=' . $key . '">'.$key.'</a></h2>';
-			}
+		echo '</div>';
+		echo '<h1>VOTE NOW</h1>';
+		foreach( $responses as $key => $value )
+		{
+			echo '<h2><a href="http://www.backworlds.com/whatnow/index.php?id=' . $id . '&button=' . $key . '">'.$key.'</a></h2>';
 		}
 	}
 	else
@@ -196,13 +224,18 @@ else if( !isset($_GET['query']) )
 		echo '<body>';
 		echo '<div class="all">';
 		echo '<div class="main">';
-		echo '<h1>UNAPPROVED REQUEST<br/><br/>NONCOMFORMITY FINE IS APPLICABLE</h1>';
+		echo '<h1>STAND BY FOR INSTRUCTION<br/><br/>NONCOMFORMITY GUARANTEES REEDUCATION</h1>';
 		echo '<div id="menu">';
 	}
 	
 	echo '</div>';
 	echo '</div>';
-	echo '<div id="footer"><p>ALL INFORMATION IS USELESS</p></div>';
+	echo '<div id="footer"><p>';
+	if( $oldCount >= 0 )
+	{
+		echo 'PREVIOUS ACTION ' . $oldWinner . ', ' . $oldCount . ' VOTES<br />';
+	}
+	echo 'ALL OTHER INFORMATION IS USELESS</p></div>';
 	echo '</div>';
 	echo '</body>';
 }
