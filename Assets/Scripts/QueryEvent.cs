@@ -22,6 +22,11 @@ public class QueryEvent {
 
 	public static QueryEvent query;
 
+	public string GetURL()
+	{
+		return "http://www.backworlds.com/whatnow/?id=" + gameID;
+	}
+
 	// Use this for initialization
 	public QueryEvent () 
 	{
@@ -87,7 +92,7 @@ public class QueryEvent {
 	{
 		countdown = 0;
 
-		string queryString = "http://www.backworlds.com/whatnow/index.php?id=" + gameID;
+		string queryString = GetURL();
 		queryString += "&getresponse=1";
 		
 		wwwQuery = new WWW (queryString);
@@ -99,7 +104,7 @@ public class QueryEvent {
 	{
 		countdown = _time;
 
-		string queryString = "http://www.backworlds.com/whatnow/index.php?id=" + gameID;
+		string queryString = GetURL();
 
 		queryString += "&query=What%20to%20%20do?";
 		uint nItems = 0;
