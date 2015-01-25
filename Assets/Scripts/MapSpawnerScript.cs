@@ -10,27 +10,36 @@ public class MapSpawnerScript : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
         //initialize first room;
-		currentRoom = new Vector2(0,0);
+		initialize();
+	}
+	public void initialize()
+	{
+		if(levelList == null)
+		{
 		levelList = new List<Level>();
 		currentRoom = new Vector2(0, 0);
 		GameObject temp = (GameObject)Instantiate(roomList[0], new Vector3(currentRoom.x * mapOffset, currentRoom.y * mapOffset), Quaternion.identity);
 		levelList.Add(new Level(new Vector2(currentRoom.x, currentRoom.y),temp.GetComponent<RoomProperties>().mapFile));
-
-       
+		}
 	}
-	
 	// Update is called once per frame
 	void Update () {
 	    
 	}
 	public string getCurrentRoomMap()
 	{
+		if(levelList != null)
+		{
 		foreach(Level lv in levelList)
 		{
 			if(lv.mCoords == currentRoom)
 			{
 				return lv.mLevelMap;
 			}
+		}
+		}else{
+			Debug.Log ("ERROR");
+			return "ERROR";
 		}
 		return "ERROR";
 	}
