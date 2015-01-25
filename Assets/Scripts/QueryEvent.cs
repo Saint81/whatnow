@@ -18,7 +18,7 @@ public class QueryEvent {
 	public EWaitMode waitMode;
 	public WWW wwwQuery;
 
-	public List<long>	lResults;
+	public long iVoteResult;
 
 	public static QueryEvent query;
 
@@ -27,7 +27,9 @@ public class QueryEvent {
 	{
 		countdown = 0;
 		gameID = "anteater";
-		gameID += System.Convert.ToString(/*System.Random () % */1000);
+
+		System.Random rand = new System.Random();
+		gameID += System.Convert.ToString(rand.Next() % 1000);
 		waitMode = EWaitMode.wmNone;
 	}
 
@@ -47,10 +49,13 @@ public class QueryEvent {
 			Debug.Log ("Query done!");
 			if( waitMode == EWaitMode.wmResponse )
 			{
-				lResults = new List<long>();
+				iVoteResult = 0;
+				List<long> lResults = new List<long>();
 				waitMode = EWaitMode.wmHasResults;
 				string[] lExtents = wwwQuery.text.Split(';');
-				for(uint i = 0; i < lExtents.Length; i ++)
+				
+				System.Random rand = new System.Random();
+				for(int i = 0; i < lExtents.Length; i ++)
 				{
 					int iEquals = lExtents[i].LastIndexOf('=');
 					if( iEquals < 0 )
@@ -58,6 +63,9 @@ public class QueryEvent {
 					long nVotes = System.Convert.ToInt32 (lExtents[i].Substring (iEquals + 1));
 					Debug.Log (System.Convert.ToString (nVotes));
 					lResults.Add(nVotes);
+					if( nVotes > lResults[(int)iVoteResult] ||
+					    nVotes == lResults[(int)iVoteResult] && ((rand.Next() & 1) != 0))
+						iVoteResult = i;
 				}
 			}
 			else
@@ -100,5 +108,11 @@ public class QueryEvent {
 		wwwQuery = new WWW (queryString);
 		Debug.Log ("sent query " + queryString);
 		waitMode = EWaitMode.wmQuery;
+	}
+
+	public int GrabResults()
+	{
+		waitMode = EWaitMode.wmNone;
+		return (int)iVoteResult;
 	}
 }
