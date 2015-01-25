@@ -15,6 +15,7 @@ public class QueryEvent {
 
 	public float countdown;
 	public string gameID;
+	public string queuedQuery;
 	public EWaitMode waitMode;
 	public WWW wwwQuery;
 
@@ -27,11 +28,19 @@ public class QueryEvent {
 		return "http://www.backworlds.com/whatnow/?id=" + gameID;
 	}
 
+	public static QueryEvent Get()
+	{
+		if( query == null )
+			query = new QueryEvent();
+		return query;
+	}
+
 	// Use this for initialization
 	public QueryEvent () 
 	{
 		countdown = 0;
 		gameID = "anteater";
+		queuedQuery = null;
 
 		System.Random rand = new System.Random();
 		gameID += System.Convert.ToString(rand.Next() % 1000);
@@ -79,6 +88,14 @@ public class QueryEvent {
 			else
 				waitMode = EWaitMode.wmNone;
 
+			if( queuedQuery != null )
+			{
+				wwwQuery = new WWW (queuedQuery);
+				Debug.Log ("sent query " + queuedQuery);
+				waitMode = EWaitMode.wmQuery;
+				queuedQuery = null;
+			}
+
 			return;
 		}
 
@@ -86,9 +103,6 @@ public class QueryEvent {
 			return;
 
 		countdown -= Time.deltaTime;
-
-		if (countdown < 0)
-			CloseQuery();
 	}
 
 	public void CloseQuery()
@@ -121,8 +135,11 @@ public class QueryEvent {
 			nItems++;
 		}
 
+		/*
 		wwwQuery = new WWW (queryString);
 		Debug.Log ("sent query " + queryString);
 		waitMode = EWaitMode.wmQuery;
+		*/
+		queuedQuery = queryString;
 	}
 }
