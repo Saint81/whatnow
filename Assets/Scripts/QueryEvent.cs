@@ -142,4 +142,12 @@ public class QueryEvent {
 		*/
 		queuedQuery = queryString;
 	}
+
+	public void Cleanup ()
+	{
+		string queryString = GetURL();
+		queryString += "&cleanup=1";
+		wwwQuery = new WWW(queryString);
+		Debug.Log ("sent query " + queryString);
+	}
 }
