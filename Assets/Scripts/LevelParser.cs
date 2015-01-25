@@ -21,12 +21,11 @@ public class LevelParser : MonoBehaviour {
 
 	public TileType[,] ParseLevel(string level)
 	{
-		try
-		{
 			// Create a new StreamReader, tell it which file to read and what encoding the file
 			// was saved as
 			StreamReader file = new StreamReader(Application.dataPath + "/Resources/Levels/" + level, Encoding.Default);
-
+		try
+		{
 			using(file)
 			{
 				string line;
@@ -51,15 +50,16 @@ public class LevelParser : MonoBehaviour {
                         for(int j = 0; j < levelMap.GetLength(1) /*width*/; j++)
                         {
                             levelMap[i, j] = (TileType)int.Parse(tile[j]);
+						
                         }
                     }
-				}
+			}
 				file.Close();
-		}
-		catch (System.Exception e)
+		}catch(System.Exception e)
 		{
-			//Debug.Log("{0}\n" + e.Message);
+
 		}
+		
 		return levelMap;
 	}
 

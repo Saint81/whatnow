@@ -10,9 +10,9 @@ public class Level
     public string mLevelPreFab;
     public string mLevelMap;
 
-    public Level(Vector2 coords)
+    public Level(Vector2 coords, string LevelMap)
     {
         mCoords = coords;
-      
+		mLevelMap = LevelMap;
     }
 }

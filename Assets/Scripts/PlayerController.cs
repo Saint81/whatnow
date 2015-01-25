@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 
 public class PlayerController : MonoBehaviour {
@@ -9,13 +9,15 @@ public class PlayerController : MonoBehaviour {
 	public Mover targetPlayer;
 	public HealthSystem playerHP;
 	float move = 1.1f;
-
+	public MapSpawnerScript spawn;
 	public LevelParser levelparser;
 	public TileType[,] map;
 	
 	void Start()
 	{
-		map = levelparser.ParseLevel ("test.txt");
+
+		map = levelparser.ParseLevel (spawn.getCurrentRoomMap());
+
 		direction = new Vector2(0.0f, 1.0f);
 	}
 
@@ -32,6 +34,15 @@ public class PlayerController : MonoBehaviour {
 					StartCoroutine( targetPlayer.MoveOneSquare(transform.position.x, transform.position.y, direction));
 					position.y -= 1;
 				}
+			}else if((position.x <= 10 && position.x >= 7) && position.y == 0 && !targetPlayer.isMoving)
+			{
+				//create a new room
+				spawn.moveRoom(dir.UP);
+				string newMap = spawn.getCurrentRoomMap();
+				map = levelparser.ParseLevel(newMap);
+				StartCoroutine(targetPlayer.MoveOneSquare(transform.position.x, transform.position.y, direction));
+				position.y = 17;
+
 			}
 		}
 
@@ -45,6 +56,15 @@ public class PlayerController : MonoBehaviour {
 					StartCoroutine( targetPlayer.MoveOneSquare(transform.position.x, transform.position.y, direction));
 					position.y += 1;
 				}
+			}else if((position.x <= 10 && position.x >= 7) && position.y == 17 && !targetPlayer.isMoving)
+			{
+				//create a new room
+				spawn.moveRoom(dir.DOWN);
+				string newMap = spawn.getCurrentRoomMap();
+				map = levelparser.ParseLevel(newMap);
+				StartCoroutine(targetPlayer.MoveOneSquare(transform.position.x, transform.position.y, direction));
+				position.y = 0;
+				
 			}
 		}
 
@@ -58,6 +78,15 @@ public class PlayerController : MonoBehaviour {
 					StartCoroutine( targetPlayer.MoveOneSquare(transform.position.x, transform.position.y, direction));
 					position.x += 1;
 				}
+			}else if((position.y <= 10 && position.y >= 7) && position.x == 17 && !targetPlayer.isMoving)
+			{
+				//create a new room
+				spawn.moveRoom(dir.RIGHT);
+				string newMap = spawn.getCurrentRoomMap();
+				map = levelparser.ParseLevel(newMap);
+				StartCoroutine(targetPlayer.MoveOneSquare(transform.position.x, transform.position.y, direction));
+				position.x = 0;
+				
 			}
 		}
 
@@ -71,6 +100,15 @@ public class PlayerController : MonoBehaviour {
 					StartCoroutine( targetPlayer.MoveOneSquare(transform.position.x, transform.position.y, direction));
 					position.x -= 1;
 				}
+			}else if((position.y <= 10 && position.y >= 7) && position.x == 0 && !targetPlayer.isMoving)
+			{
+				//create a new room
+				spawn.moveRoom(dir.LEFT);
+				string newMap = spawn.getCurrentRoomMap();
+				map = levelparser.ParseLevel(newMap);
+				StartCoroutine(targetPlayer.MoveOneSquare(transform.position.x, transform.position.y, direction));
+				position.x = 17;
+				
 			}
 		}
 
