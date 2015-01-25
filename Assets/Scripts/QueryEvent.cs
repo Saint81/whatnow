@@ -80,14 +80,19 @@ public class QueryEvent {
 		countdown -= Time.deltaTime;
 
 		if (countdown < 0)
-		{
-			string queryString = "http://www.backworlds.com/whatnow/index.php?id=" + gameID;
-			queryString += "&getresponse=1";
-			
-			wwwQuery = new WWW (queryString);
-			waitMode = EWaitMode.wmResponse;
-			Debug.Log ("sent query " + queryString);
-		}
+			CloseQuery();
+	}
+
+	public void CloseQuery()
+	{
+		countdown = 0;
+
+		string queryString = "http://www.backworlds.com/whatnow/index.php?id=" + gameID;
+		queryString += "&getresponse=1";
+		
+		wwwQuery = new WWW (queryString);
+		waitMode = EWaitMode.wmResponse;
+		Debug.Log ("sent query " + queryString);
 	}
 
 	public void Activate (float _time, List<LevelParser.SActiveItem> _lItems) 
