@@ -9,6 +9,8 @@ public class HealthSystem : MonoBehaviour {
 	public int sweapons = 0;
 	public int mtools = 10;
 	public int mweapons = 10;
+	//public DeathByWinning explode;
+	public DeathByHealthIsZero dying;
 
 	public void ModifyHealth(int damage)
 	{
@@ -19,7 +21,8 @@ public class HealthSystem : MonoBehaviour {
 	{
 		if(HP <= 0)
 		{
-			Destroy(this.gameObject);
+			//Destroy(this.gameObject);
+			StartCoroutine(dying.Death());
 		}
 	}
 }
