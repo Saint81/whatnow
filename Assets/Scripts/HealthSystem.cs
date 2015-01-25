@@ -11,18 +11,28 @@ public class HealthSystem : MonoBehaviour {
 	public int mweapons = 10;
 	//public DeathByWinning explode;
 	public DeathByHealthIsZero dying;
-
-	public void ModifyHealth(int damage)
-	{
-		HP -= damage;
-	}
+	private float oldtime = 0;
+	private float newtime;
 
 	void Update()
 	{
-		if(HP <= 0)
+		newtime = Time.time;
+		if(newtime - oldtime > 5){
+			Hunger--;
+			oldtime = newtime;
+		}
+		if(HP <= 0 || Hunger <=0)
 		{
 			//Destroy(this.gameObject);
 			StartCoroutine(dying.Death());
 		}
+		if(HP > 100)
+			HP = 100;
+		if(Hunger > 100)
+			Hunger = 100;
+		if(stools > mtools)
+			stools = mtools;
+		if(sweapons > mweapons)
+			sweapons = mweapons;
 	}
 }

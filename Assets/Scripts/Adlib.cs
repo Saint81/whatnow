@@ -22,8 +22,8 @@ public class Adlib{
 	private string[] body_parts = new string[13] {"arm", "leg", "back", "butt", "face", "neck", "ankle", "shoulder", "stomach", "chest", "groin", "hand", "foot"};
 	private string[] pain = new string[10] {"bruised", "bleeding", "shattered", "scraped", "gored", "cut", "broken", "in severe pain", "starting to fall off", "melted"};
 
-	public string Search(string item = null){
-		if(item != null){
+	public string Search(string item){
+		if(item != "none"){
 			if(item == "weapon")
 				return "You " + found[(int)(Random.value * found.Length)] + " a " + weapons[Random.Range(0, weapons.Length)] + " and added it to your collection of armaments";
 			else if(item == "health")
