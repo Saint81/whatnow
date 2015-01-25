@@ -4,6 +4,11 @@ using System.Collections;
 public class HealthSystem : MonoBehaviour {
 
 	public int HP = 100;
+	public int Hunger = 100;
+	public int stools = 0;
+	public int sweapons = 0;
+	public int mtools = 10;
+	public int mweapons = 10;
 
 	public void ModifyHealth(int damage)
 	{
