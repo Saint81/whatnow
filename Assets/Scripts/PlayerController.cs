@@ -35,7 +35,7 @@ public class PlayerController : MonoBehaviour {
 	{
 		string newMap = spawn.getCurrentRoomMap();
 		map = levelparser.ParseLevel(newMap);
-		lActiveItems = levelparser.lActiveItems;
+		lActiveItems = (spawn.isNewLevel) ? levelparser.lActiveItems : null;
 		hasTriggeredTrap = false;
     }
 
@@ -139,6 +139,8 @@ public class PlayerController : MonoBehaviour {
 		{
 			int x = (int)(position.x + direction.x);
 			int y = (int)(position.y + direction.y);
+			int itemX = x;
+			int itemY = y;
 
 			if( lActiveItems == null )
 			{
@@ -162,6 +164,8 @@ public class PlayerController : MonoBehaviour {
 					{
 						iActiveItem = i;
 						ClosestDist = Dist;
+						itemX = item.x;
+						itemY = item.y;
 					}
 				}
 
@@ -172,6 +176,18 @@ public class PlayerController : MonoBehaviour {
 				{
 					hasTriggeredTrap = pickedItem.name == QueryEvent.query.voteResult;
 					TriggerHandler.HandleAction (pickedItem.name, hasTriggeredTrap, x, y);
+
+					// Unmark map
+					map[itemY, itemX] = TileType.BLOCK;
+					if( itemX > 0 && map[itemY, itemX-1] == TileType.ITEM )
+						map[itemY, itemX-1] = TileType.BLOCK;
+					if( itemX < map.GetLength(0)-1 && map[itemY, itemX+1] == TileType.ITEM )
+						map[itemY, itemX+1] = TileType.BLOCK;
+					if( itemY > 0 && map[itemY-1, itemX] == TileType.ITEM )
+						map[itemY-1, itemX] = TileType.BLOCK;
+					if( itemY < map.GetLength(1)-1 && map[itemY+1, itemX] == TileType.ITEM )
+						map[itemY+1, itemX] = TileType.BLOCK;
+
 				}
 			}
 

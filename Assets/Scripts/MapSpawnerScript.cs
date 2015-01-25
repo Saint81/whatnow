@@ -7,6 +7,7 @@ public class MapSpawnerScript : MonoBehaviour {
     public Vector2 currentRoom;
     public GameObject[] roomList;
 	public List<Level> levelList;
+	public bool isNewLevel;
 	// Use this for initialization
 	void Start () {
         //initialize first room;
@@ -16,10 +17,11 @@ public class MapSpawnerScript : MonoBehaviour {
 	{
 		if(levelList == null)
 		{
-		levelList = new List<Level>();
-		currentRoom = new Vector2(0, 0);
-		GameObject temp = (GameObject)Instantiate(roomList[0], new Vector3(currentRoom.x * mapOffset, currentRoom.y * mapOffset), Quaternion.identity);
-		levelList.Add(new Level(new Vector2(currentRoom.x, currentRoom.y),temp.GetComponent<RoomProperties>().mapFile));
+			levelList = new List<Level>();
+			currentRoom = new Vector2(0, 0);
+			GameObject temp = (GameObject)Instantiate(roomList[0], new Vector3(currentRoom.x * mapOffset, currentRoom.y * mapOffset), Quaternion.identity);
+			levelList.Add(new Level(new Vector2(currentRoom.x, currentRoom.y),temp.GetComponent<RoomProperties>().mapFile));
+			isNewLevel = true;
 		}
 	}
 	// Update is called once per frame
@@ -45,6 +47,7 @@ public class MapSpawnerScript : MonoBehaviour {
 	}
 	public void moveRoom(dir d)
 	{
+		int nLevelsOld = levelList.Count;
 		switch(d)
 		{
 		case dir.UP:
@@ -141,5 +144,6 @@ public class MapSpawnerScript : MonoBehaviour {
 			break;
 		}
 		}
+		isNewLevel = ( nLevelsOld != levelList.Count );
 	}
 }
