@@ -11,12 +11,12 @@ public class Adlib{
 	private string[] car_locations = new string[9] {"under the passenger seat", "in the trunk", "under the hood", "under the driver seat", "in the glove box", "under the car", "in the engine", "in the gas tank", "in the roof"};
 	private string[] car_sounds = new string[7] {"a ticking noise", "scratching", "static noise", "a dial tone", "tapping", "a click", "a siren"};
 
-	private string[] explosives = new string[7] {"explosive mouse trap", "tripwire", "claymore", "C4 charge", "IED", "shotgun trap", "explosive bear trap"};
+	private string[] explosives = new string[8] {"explosive mouse trap", "tripwire", "claymore", "C4 charge", "IED", "shotgun trap", "explosive bear trap", "hamburger grenade"};
 	private string[] explode = new string[4] {"trigger", "activate", "detonate", "discharge"};
 
-	private string[] weapons = new string[6] {"machine gun", "tommy gun", "laser gun", "revolver", "crossbow", "machete"};
+	private string[] weapons = new string[11] {"Browning machine gun", "tommy gun", "laser pistol", "revolver", "crossbow", "machete", "power fist", "greatsword", "halbred", "flamethrower", "baseball bat"};
 	private string[] health = new string[5] {"medkit", "syrringe of morphine", "bottle of painkillers", "tiny Band-Aid", "gauze pad"};
-	private string[] food = new string[7] {"banana", "pineapple", "can of Sprite", "roasted turkey", "can of beans", "bottle of water", "questionably prepared Fugu fish"};
+	private string[] food = new string[15] {"banana", "pineapple", "can of Sprite", "roasted turkey", "can of beans", "bottle of water", "questionably prepared Fugu fish", "box of Canadian bacon", "watermelon", "irradiated scrambled egg", "block of feta", "bag of seaweed", "box of cereal", "habanero", "bowl of ramen"};
 	private string[] tools = new string[5] {"Monkey wrench", "drill", "screwdriver", "can of gasoline", "box of screws"};
 
 	private string[] body_parts = new string[13] {"arm", "leg", "back", "butt", "face", "neck", "ankle", "shoulder", "stomach", "chest", "groin", "hand", "foot"};
