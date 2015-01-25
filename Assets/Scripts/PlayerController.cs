@@ -125,6 +125,7 @@ public class PlayerController : MonoBehaviour {
 		if(mCurrentRoom != spawn.currentRoom)
 		{
 			Camera.main.transform.position = new Vector3(spawn.currentRoom.x * spawn.mapOffset , spawn.currentRoom.y * spawn.mapOffset, -10.0f);
+			Camera.main.GetComponent<CameraShakeScript>().originalPos = Camera.main.transform.position;
 			mCurrentRoom = spawn.currentRoom;
 		}
 

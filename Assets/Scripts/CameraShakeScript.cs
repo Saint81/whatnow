@@ -27,7 +27,7 @@ public class CameraShakeScript : MonoBehaviour {
 		//if shake has started and still shake left
 		if (shake > 0 )
 		{
-			Camera.main.transform.localPosition = new Vector3(0f,0f,Camera.main.transform.position.z);
+            Camera.main.transform.position = originalPos;
 			Vector3 newVect = new Vector3(Camera.main.transform.localPosition.x + Random.insideUnitCircle.x * shakeAmount * shake, 
 			                          Camera.main.transform.localPosition.y + Random.insideUnitCircle.y * shakeAmount * shake, 
 			                          Camera.main.transform.localPosition.z);
@@ -38,7 +38,7 @@ public class CameraShakeScript : MonoBehaviour {
 		else if(shake <= 0 )
 		{
 			shake = 0f;
-			Camera.main.transform.localPosition = new Vector3(0f,0f,Camera.main.transform.position.z);
+            Camera.main.transform.position = originalPos;
 		}
 		
 	}
