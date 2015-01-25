@@ -17,20 +17,27 @@ public class PlayerController : MonoBehaviour {
 	public LevelParser levelparser;
 	public List<LevelParser.SActiveItem> lActiveItems;
 	public TileType[,] map;
-	public static bool isWaitingForAudience;
+	public bool hasTriggeredTrap;
 	
 	void Start()
 	{
 		spawn.initialize();
-		map = levelparser.ParseLevel(spawn.getCurrentRoomMap());
+		UpdateLevel();
 		target.GetComponent<SpriteRenderer>().sprite = targetPlayer.walkAnim[0];
-		lActiveItems = levelparser.lActiveItems;
 		QueryEvent.query = new QueryEvent();
 		QueryEvent.query.Activate(5.0f, levelparser.lActiveItems);
 		direction = new Vector2(0.0f, 1.0f);
 		mCurrentRoom = spawn.currentRoom;
 		actionHeld = true;
 	}
+
+	void UpdateLevel ()
+	{
+		string newMap = spawn.getCurrentRoomMap();
+		map = levelparser.ParseLevel(newMap);
+		lActiveItems = (spawn.isNewLevel) ? levelparser.lActiveItems : null;
+		hasTriggeredTrap = false;
+    }
 
 	// Update is called once per frame
 	void LateUpdate () 
@@ -53,8 +60,7 @@ public class PlayerController : MonoBehaviour {
 			{
 				//create a new room
 				spawn.moveRoom(dir.UP);
-				string newMap = spawn.getCurrentRoomMap();
-				map = levelparser.ParseLevel(newMap);
+				UpdateLevel();
 				StartCoroutine(targetPlayer.MoveOneSquare(transform.position.x, transform.position.y, -direction));
 				position.y = 17;
 			}
@@ -73,8 +79,7 @@ public class PlayerController : MonoBehaviour {
 			{
 				//create a new room
 				spawn.moveRoom(dir.DOWN);
-				string newMap = spawn.getCurrentRoomMap();
-				map = levelparser.ParseLevel(newMap);
+				UpdateLevel();
 				StartCoroutine(targetPlayer.MoveOneSquare(transform.position.x, transform.position.y, -direction));
 				position.y = 0;
 				
@@ -94,8 +99,7 @@ public class PlayerController : MonoBehaviour {
 			{
 				//create a new room
 				spawn.moveRoom(dir.RIGHT);
-				string newMap = spawn.getCurrentRoomMap();
-				map = levelparser.ParseLevel(newMap);
+				UpdateLevel();
 				StartCoroutine(targetPlayer.MoveOneSquare(transform.position.x, transform.position.y, direction));
 				position.x = 0;
 				
@@ -116,8 +120,7 @@ public class PlayerController : MonoBehaviour {
 			{
 				//create a new room
 				spawn.moveRoom(dir.LEFT);
-				string newMap = spawn.getCurrentRoomMap();
-				map = levelparser.ParseLevel(newMap);
+				UpdateLevel();
 				StartCoroutine(targetPlayer.MoveOneSquare(transform.position.x, transform.position.y, direction));
 				position.x = 17;
 				
@@ -136,9 +139,16 @@ public class PlayerController : MonoBehaviour {
 		{
 			int x = (int)(position.x + direction.x);
 			int y = (int)(position.y + direction.y);
+			int itemX = x;
+			int itemY = y;
+
+			if( lActiveItems == null )
+			{
+				TriggerHandler.HandleActionInEmptyRoom();
+			}
 		
 			// If it's an activatable tile, find the closest one
-			if( !actionHeld && !targetPlayer.isMoving &&
+			else if( !actionHeld && !targetPlayer.isMoving &&
 			   	x >= 0 && y >= 0 && 
 			    x < map.GetLength(0) && y < map.GetLength(1) && 
 			    map[y,x] == TileType.ITEM && 
@@ -154,11 +164,31 @@ public class PlayerController : MonoBehaviour {
 					{
 						iActiveItem = i;
 						ClosestDist = Dist;
+						itemX = item.x;
+						itemY = item.y;
 					}
 				}
 
 				LevelParser.SActiveItem pickedItem = lActiveItems[iActiveItem];
-				TriggerHandler.HandleAction (pickedItem.name, pickedItem.name == QueryEvent.query.voteResult, x, y);
+				if( hasTriggeredTrap )
+					TriggerHandler.HandleActionPostTrapTrigger();
+				else
+				{
+					hasTriggeredTrap = pickedItem.name == QueryEvent.query.voteResult;
+					TriggerHandler.HandleAction (pickedItem.name, hasTriggeredTrap, x, y);
+
+					// Unmark map
+					map[itemY, itemX] = TileType.BLOCK;
+					if( itemX > 0 && map[itemY, itemX-1] == TileType.ITEM )
+						map[itemY, itemX-1] = TileType.BLOCK;
+					if( itemX < map.GetLength(0)-1 && map[itemY, itemX+1] == TileType.ITEM )
+						map[itemY, itemX+1] = TileType.BLOCK;
+					if( itemY > 0 && map[itemY-1, itemX] == TileType.ITEM )
+						map[itemY-1, itemX] = TileType.BLOCK;
+					if( itemY < map.GetLength(1)-1 && map[itemY+1, itemX] == TileType.ITEM )
+						map[itemY+1, itemX] = TileType.BLOCK;
+
+				}
 			}
 
 			actionHeld = true;
