@@ -1,7 +1,7 @@
 <?php
 
 
-function readWhatNowLog($_fileName, &$_responses)
+function readWhatNowLog($_fileName, &$_responses, &$queryName)
 {
 	if( file_exists($_fileName) )
 		$f = fopen($_fileName, "rb");
@@ -77,7 +77,7 @@ if( isset($_GET['query']) )
 else if( !$cleanup )
 {
 	$hasQuery = true;
-	if( !readWhatNowLog($fileName, $responses) )
+	if( !readWhatNowLog($fileName, $responses, $queryName) )
 		$hasQuery = false;
 }
 
@@ -151,7 +151,7 @@ else if( $cleanup )
 else if( !isset($_GET['query']) )
 {
 	$oldCount = -1;
-	if(readWhatNowLog($oldFile, $oldResponses))
+	if(readWhatNowLog($oldFile, $oldResponses, $ignored))
 	{
 		foreach( $oldResponses as $key => $value )
 		{
@@ -169,8 +169,7 @@ else if( !isset($_GET['query']) )
 	echo '<link type="text/css" rel="stylesheet" href="stylesheet.css"/>';
 	
 	$isButton = isset($_GET['button']);
-	if( !isButton || !$hasQuery )
-		echo '<meta http-equiv="refresh" content="4; URL=http://www.backworlds.com/whatnow/?id=' . $id . '" />';
+	echo '<meta http-equiv="refresh" content="4; URL=http://www.backworlds.com/whatnow/?id=' . $id . '" />';
 
 	if( $isButton )
 	{
@@ -209,7 +208,7 @@ else if( !isset($_GET['query']) )
 		echo '<h1>WHAT DO WE DO NOW?</h1>';
 		echo '<div id="menu">';
 		echo '<div id="picture">';
-            // echo '<img src="img/pic_1.png">';
+        echo '<img src="img/' . $queryName . '">';
 		echo '</div>';
 		echo '<h1>VOTE NOW</h1>';
 		foreach( $responses as $key => $value )
