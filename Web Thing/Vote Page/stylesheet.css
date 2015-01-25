@@ -1,0 +1,49 @@
+@font-face {
+    font-family: EndOfLine;
+    src: url(EndofLineFinal.ttf);
+}
+
+body{
+ width:320px; 
+height:568px;
+ margin:auto;
+ background-color:#0d2030;
+}
+
+h1{
+    color:#f68f37;
+    font-size:36px;
+    font-family:EndOfLine;
+    text-align: center;
+    -webkit-font-smoothing: antialiased;
+}
+
+h2{
+    color:white;
+    font-size: 16px;
+    padding: 20px;
+    font-family:EndOfLine;
+    background-color:#f68f37;
+    -webkit-font-smoothing: antialiased;
+    text-align: center;
+    
+}
+
+p{
+  font-family:EndOfLine;
+    color:white;
+    text-align: center;
+}   
+
+a{
+		text-decoration: none;
+        color:white;
+}
+a:hover{
+		text-decoration: none;
+        color:#f68f37;
+}
+a:visited{
+        text-decoration: none;
+        color:white;
+}
