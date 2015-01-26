@@ -22,6 +22,8 @@ public class Adlib{
 	private string[] body_parts = new string[13] {"arm", "leg", "back", "butt", "face", "neck", "ankle", "shoulder", "stomach", "chest", "groin", "hand", "foot"};
 	private string[] pain = new string[10] {"bruised", "bleeding", "shattered", "scraped", "gored", "cut", "broken", "in severe pain", "starting to fall off", "melted"};
 
+	private string[] streets = new string[23] {"Alton Parkway", "Amazon Aisle", "Aspen Tree Lane", "Blind Squirrel Lane", "Blizzard Avenue", "Calle De La Plata", "Campus Drive", "Carbine Street", "East Peltason Drive", "Enterprise", "Irvine Center Drive", "Isaac Lane", "Klei Canyon", "Laguna Canyon Road", "MacArthur Boulevard", "Obsidian Parkway", "Oculus Boulevard", "Portico Aisle", "Pullman Street", "Red Five Road", "Spectrum Pointe Drive", "Turtle Rock Drive", "Zelda Way"};
+
 	public string Search(string item){
 		if(item != "none"){
 			if(item == "weapon")
@@ -32,6 +34,8 @@ public class Adlib{
 				return "You " + found[(int)(Random.value * found.Length)] + " a useful tool, a " + tools[Random.Range(0, tools.Length)];
 			else if(item == "food")
 				return "You " + found[(int)(Random.value * found.Length)] + " and consumed a " + food[Random.Range(0, food.Length)];
+			else if(item == "sign")
+				return streets[(int)(Random.value * streets.Length)] + " and " + streets[(int)(Random.value * streets.Length)];
 			else 
 				return "You accidentaly " + explode[(int)(Random.value * explode.Length)] + " a " + explosives[Random.Range(0, explosives.Length)] + "! Your " + body_parts[Random.Range(0, body_parts.Length)] + " is now " + pain[Random.Range(0, pain.Length)];
 		}

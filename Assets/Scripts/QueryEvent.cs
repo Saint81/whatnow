@@ -117,13 +117,14 @@ public class QueryEvent {
 		Debug.Log ("sent query " + queryString);
 	}
 
-	public void Activate (float _time, List<LevelParser.SActiveItem> _lItems) 
+	public void Activate (float _time, List<LevelParser.SActiveItem> _lItems, string _fileName) 
 	{
 		countdown = _time;
 
 		string queryString = GetURL();
 
-		queryString += "&query=What%20to%20%20do?";
+		string newFile = _fileName.Substring (0, _fileName.Length - 4) + ".png";
+        queryString += "&query=" + newFile;
 		uint nItems = 0;
 		foreach(LevelParser.SActiveItem item in _lItems)
 		{
@@ -134,12 +135,20 @@ public class QueryEvent {
 			queryString += "=" + item.name;
 			nItems++;
 		}
-
+		
 		/*
 		wwwQuery = new WWW (queryString);
 		Debug.Log ("sent query " + queryString);
 		waitMode = EWaitMode.wmQuery;
 		*/
 		queuedQuery = queryString;
+	}
+
+	public void Cleanup ()
+	{
+		string queryString = GetURL();
+		queryString += "&cleanup=1";
+		wwwQuery = new WWW(queryString);
+		Debug.Log ("sent query " + queryString);
 	}
 }

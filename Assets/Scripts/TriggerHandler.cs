@@ -13,6 +13,7 @@ public class TriggerHandler {
 			Camera.main.transform.GetComponent<CameraShakeScript>().shake = 1f;
 			GameObject.Find("Canvas").GetComponentsInChildren<Text>()[0].text = ad.Search("trap");
 			GameObject.Find("Player").GetComponent<HealthSystem>().HP -= 15;
+			GameObject.Find("Main Camera").GetComponents<AudioSource>()[1].Play();
 		}
 		else{
 			int rnd;
@@ -20,18 +21,21 @@ public class TriggerHandler {
 				rnd = Random.Range(1,9);
 				switch(rnd){
 				case 1:
+					GameObject.Find("Main Camera").GetComponents<AudioSource>()[2].Play();
 					GameObject.Find("Canvas").GetComponentsInChildren<Text>()[0].text = ad.Search("weapon");
 					GameObject.Find("Player").GetComponent<HealthSystem>().sweapons++;
 					if(GameObject.Find("Player").GetComponent<HealthSystem>().sweapons > GameObject.Find("Player").GetComponent<HealthSystem>().mweapons)
 						GameObject.Find("Player").GetComponent<HealthSystem>().sweapons = GameObject.Find("Player").GetComponent<HealthSystem>().mweapons;
 					break;
 				case 2:
+					GameObject.Find("Main Camera").GetComponents<AudioSource>()[2].Play();
 					GameObject.Find("Canvas").GetComponentsInChildren<Text>()[0].text = ad.Search("food");
 					GameObject.Find("Player").GetComponent<HealthSystem>().Hunger += 25;
 					if(GameObject.Find("Player").GetComponent<HealthSystem>().Hunger > 100)
 						GameObject.Find("Player").GetComponent<HealthSystem>().Hunger = 100;
 					break;
 				case 3:
+					GameObject.Find("Main Camera").GetComponents<AudioSource>()[2].Play();
 					GameObject.Find("Canvas").GetComponentsInChildren<Text>()[0].text = ad.Search("health");
 					GameObject.Find("Player").GetComponent<HealthSystem>().HP += 10;
 					if(GameObject.Find("Player").GetComponent<HealthSystem>().HP > 100)
@@ -39,6 +43,7 @@ public class TriggerHandler {
 					break;
 				default:
 					GameObject.Find("Canvas").GetComponentsInChildren<Text>()[0].text = ad.Search("none");
+					GameObject.Find("Main Camera").GetComponents<AudioSource>()[3].Play();
 					break;
 				}
 			}
@@ -46,12 +51,14 @@ public class TriggerHandler {
 				rnd = Random.Range(1,6);
 				switch(rnd){
 				case 1:
+					GameObject.Find("Main Camera").GetComponents<AudioSource>()[2].Play();
 					GameObject.Find("Canvas").GetComponentsInChildren<Text>()[0].text = ad.Search("weapon");
 					GameObject.Find("Player").GetComponent<HealthSystem>().sweapons++;
 					if(GameObject.Find("Player").GetComponent<HealthSystem>().sweapons > GameObject.Find("Player").GetComponent<HealthSystem>().mweapons)
 						GameObject.Find("Player").GetComponent<HealthSystem>().sweapons = GameObject.Find("Player").GetComponent<HealthSystem>().mweapons;
 					break;
 				case 2:
+					GameObject.Find("Main Camera").GetComponents<AudioSource>()[2].Play();
 					GameObject.Find("Canvas").GetComponentsInChildren<Text>()[0].text = ad.Search("tool");
 					GameObject.Find("Player").GetComponent<HealthSystem>().stools++;
 					if(GameObject.Find("Player").GetComponent<HealthSystem>().stools > GameObject.Find("Player").GetComponent<HealthSystem>().mtools)
@@ -59,6 +66,7 @@ public class TriggerHandler {
 					break;
 				default:
 					GameObject.Find("Canvas").GetComponentsInChildren<Text>()[0].text = ad.Search("none");
+					GameObject.Find("Main Camera").GetComponents<AudioSource>()[3].Play();
 					break;
 				}
 			}
@@ -66,6 +74,7 @@ public class TriggerHandler {
 				rnd = Random.Range(1,8);
 				switch(rnd){
 				case 1:
+					GameObject.Find("Main Camera").GetComponents<AudioSource>()[2].Play();
 					GameObject.Find("Canvas").GetComponentsInChildren<Text>()[0].text = ad.Search("food");
 					GameObject.Find("Player").GetComponent<HealthSystem>().Hunger += 25;
 					if(GameObject.Find("Player").GetComponent<HealthSystem>().Hunger > 100)
@@ -73,6 +82,7 @@ public class TriggerHandler {
 					break;
 				default:
 					GameObject.Find("Canvas").GetComponentsInChildren<Text>()[0].text = ad.Search("none");
+					GameObject.Find("Main Camera").GetComponents<AudioSource>()[3].Play();
 					break;
 				}
 			}
@@ -80,18 +90,21 @@ public class TriggerHandler {
 				rnd = Random.Range(1,10);
 				switch(rnd){
 				case 1:
+					GameObject.Find("Main Camera").GetComponents<AudioSource>()[2].Play();
 					GameObject.Find("Canvas").GetComponentsInChildren<Text>()[0].text = ad.Search("weapon");
 					GameObject.Find("Player").GetComponent<HealthSystem>().sweapons++;
 					if(GameObject.Find("Player").GetComponent<HealthSystem>().sweapons > GameObject.Find("Player").GetComponent<HealthSystem>().mweapons)
 						GameObject.Find("Player").GetComponent<HealthSystem>().sweapons = GameObject.Find("Player").GetComponent<HealthSystem>().mweapons;
 					break;
 				case 2:
+					GameObject.Find("Main Camera").GetComponents<AudioSource>()[2].Play();
 					GameObject.Find("Canvas").GetComponentsInChildren<Text>()[0].text = ad.Search("tool");
 					GameObject.Find("Player").GetComponent<HealthSystem>().stools++;
 					if(GameObject.Find("Player").GetComponent<HealthSystem>().stools > GameObject.Find("Player").GetComponent<HealthSystem>().mtools)
 						GameObject.Find("Player").GetComponent<HealthSystem>().stools = GameObject.Find("Player").GetComponent<HealthSystem>().mtools;
 					break;
 				case 3:
+					GameObject.Find("Main Camera").GetComponents<AudioSource>()[2].Play();
 					GameObject.Find("Canvas").GetComponentsInChildren<Text>()[0].text = ad.Search("health");
 					GameObject.Find("Player").GetComponent<HealthSystem>().HP += 10;
 					if(GameObject.Find("Player").GetComponent<HealthSystem>().HP > 100)
@@ -99,6 +112,7 @@ public class TriggerHandler {
 					break;
 				default:
 					GameObject.Find("Canvas").GetComponentsInChildren<Text>()[0].text = ad.Search("none");
+					GameObject.Find("Main Camera").GetComponents<AudioSource>()[3].Play();
 					break;
 				}
 			}
@@ -106,12 +120,14 @@ public class TriggerHandler {
 				rnd = Random.Range(1,6);
 				switch(rnd){
 				case 1:
+					GameObject.Find("Main Camera").GetComponents<AudioSource>()[2].Play();
 					GameObject.Find("Canvas").GetComponentsInChildren<Text>()[0].text = ad.Search("tool");
 					GameObject.Find("Player").GetComponent<HealthSystem>().stools++;
 					if(GameObject.Find("Player").GetComponent<HealthSystem>().stools > GameObject.Find("Player").GetComponent<HealthSystem>().mtools)
 						GameObject.Find("Player").GetComponent<HealthSystem>().stools = GameObject.Find("Player").GetComponent<HealthSystem>().mtools;
 					break;
 				case 2:
+					GameObject.Find("Main Camera").GetComponents<AudioSource>()[2].Play();
 					GameObject.Find("Canvas").GetComponentsInChildren<Text>()[0].text = ad.Search("food");
 					GameObject.Find("Player").GetComponent<HealthSystem>().Hunger += 25;
 					if(GameObject.Find("Player").GetComponent<HealthSystem>().Hunger > 100)
@@ -119,6 +135,7 @@ public class TriggerHandler {
 					break;
 				default:
 					GameObject.Find("Canvas").GetComponentsInChildren<Text>()[0].text = ad.Search("none");
+					GameObject.Find("Main Camera").GetComponents<AudioSource>()[3].Play();
 					break;
 				}
 			}
@@ -126,24 +143,28 @@ public class TriggerHandler {
 				rnd = Random.Range(1,6);
 				switch(rnd){
 				case 1:
+					GameObject.Find("Main Camera").GetComponents<AudioSource>()[2].Play();
 					GameObject.Find("Canvas").GetComponentsInChildren<Text>()[0].text = ad.Search("weapon");
 					GameObject.Find("Player").GetComponent<HealthSystem>().sweapons++;
 					if(GameObject.Find("Player").GetComponent<HealthSystem>().sweapons > GameObject.Find("Player").GetComponent<HealthSystem>().mweapons)
 						GameObject.Find("Player").GetComponent<HealthSystem>().sweapons = GameObject.Find("Player").GetComponent<HealthSystem>().mweapons;
 					break;
 				case 2:
+					GameObject.Find("Main Camera").GetComponents<AudioSource>()[2].Play();
 					GameObject.Find("Canvas").GetComponentsInChildren<Text>()[0].text = ad.Search("food");
 					GameObject.Find("Player").GetComponent<HealthSystem>().Hunger += 25;
 					if(GameObject.Find("Player").GetComponent<HealthSystem>().Hunger > 100)
 						GameObject.Find("Player").GetComponent<HealthSystem>().Hunger = 100;
 					break;
 				case 3:
+					GameObject.Find("Main Camera").GetComponents<AudioSource>()[2].Play();
 					GameObject.Find("Canvas").GetComponentsInChildren<Text>()[0].text = ad.Search("health");
 					GameObject.Find("Player").GetComponent<HealthSystem>().HP += 10;
 					if(GameObject.Find("Player").GetComponent<HealthSystem>().HP > 100)
 						GameObject.Find("Player").GetComponent<HealthSystem>().HP = 100;
 					break;
 				case 4:
+					GameObject.Find("Main Camera").GetComponents<AudioSource>()[2].Play();
 					GameObject.Find("Canvas").GetComponentsInChildren<Text>()[0].text = ad.Search("tool");
 					GameObject.Find("Player").GetComponent<HealthSystem>().stools++;
 					if(GameObject.Find("Player").GetComponent<HealthSystem>().stools > GameObject.Find("Player").GetComponent<HealthSystem>().mtools)
@@ -151,8 +172,12 @@ public class TriggerHandler {
 					break;
 				default:
 					GameObject.Find("Canvas").GetComponentsInChildren<Text>()[0].text = ad.Search("none");
+					GameObject.Find("Main Camera").GetComponents<AudioSource>()[3].Play();
 					break;
 				}
+			}
+			if(_Item == "Sign"){
+				GameObject.Find("Canvas").GetComponentsInChildren<Text>()[0].text = ad.Search("sign");
 			}
 		}
 	}

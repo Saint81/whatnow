@@ -10,11 +10,14 @@ public class MapSpawnerScript : MonoBehaviour {
 	public Level nextLevel;
 	public GameObject nextLevelObject;
 	public bool isNewLevel;
+	public Vector2 winRoom;
+	public PlayerController pc;
 
 	// Use this for initialization
 	void Start () {
         //initialize first room;
 		initialize();
+		winRoom = new Vector2(9999999, 999999);
 	}
 	public void initialize()
 	{
@@ -26,6 +29,7 @@ public class MapSpawnerScript : MonoBehaviour {
 			levelList.Add(new Level(new Vector2(currentRoom.x, currentRoom.y),temp.GetComponent<RoomProperties>().mapFile));
 			isNewLevel = true;
 			GenerateNextRoom();
+
 		}
 	}
 	// Update is called once per frame
@@ -55,17 +59,37 @@ public class MapSpawnerScript : MonoBehaviour {
 	{
 		QueryEvent.Get().CloseQuery();
 		int rand = Random.Range(2, roomList.GetLength(0));
+
+
+		if(pc.playerHP.winCondActive)
+		   rand = 1;
+
 		nextLevelObject = (GameObject)Instantiate(roomList[rand], new Vector3(0 * mapOffset, 0 * mapOffset), Quaternion.identity);
 		nextLevel = new Level(new Vector2(0,0), nextLevelObject.GetComponent<RoomProperties>().mapFile);
 	
 		// Need to parse level to send query
 		LevelItemParser parser = new LevelItemParser();
 		parser.ParseLevel(nextLevel.mLevelMap);	
-		QueryEvent.Get().Activate(5.0f, parser.lActiveItems);
+		QueryEvent.Get().Activate(5.0f, parser.lActiveItems, nextLevel.mLevelMap);
 	}
 
 	public void moveRoom(dir d)
 	{
+		if(pc.playerHP.winCondActive)
+		{
+			switch(d)
+			{
+			case dir.UP: currentRoom.y ++; break;
+			case dir.DOWN: currentRoom.y --; break;
+			case dir.RIGHT: currentRoom.x ++; break;
+			case dir.LEFT: currentRoom.x --; break;
+			}
+			nextLevelObject = (GameObject)Instantiate(roomList[1], new Vector3(currentRoom.x * mapOffset, currentRoom.y * mapOffset), Quaternion.identity);
+			nextLevel = new Level(new Vector2(currentRoom.x, currentRoom.y), nextLevelObject.GetComponent<RoomProperties>().mapFile);
+			levelList.Add (nextLevel);
+			winRoom = currentRoom;
+			return;
+		}
 		int nLevelsOld = levelList.Count;
 		switch(d)
 		{
@@ -176,6 +200,9 @@ public class MapSpawnerScript : MonoBehaviour {
 			break;
 		}
 		}
+
+
+
 		isNewLevel = ( nLevelsOld != levelList.Count );
 	}
 }

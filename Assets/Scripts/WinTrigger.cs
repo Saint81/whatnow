@@ -17,10 +17,10 @@ public class WinTrigger : MonoBehaviour {
 	void Update() 
 	{
 		//if player enters range, start coroutine
-		if((playerPos.position.y >= winRangeYMin && playerPos.position.y <= winRangeYMax) &&
-		   (playerPos.position.x >= winRangeXMin && playerPos.position.x <= winRangeXMax))
+		if(GameObject.Find("MapSpawner1").GetComponent<MapSpawnerScript>().winRoom == playerPos.mCurrentRoom)
 		{
 			//.Log(playerPos.position);
+
 			StartCoroutine(winCondition.Death());
 		}
 	}

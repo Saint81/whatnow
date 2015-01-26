@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
 using System.Collections;
-
 public class HealthSystem : MonoBehaviour {
 
 	public int HP = 100;
@@ -13,7 +12,7 @@ public class HealthSystem : MonoBehaviour {
 	private float oldtime = 0;
 	private float newtime;
 
-	bool winCondActive = false;
+	public bool winCondActive = false;
 	DeathByWinning explode;
 	WinTrigger winTrig;
 
@@ -32,7 +31,7 @@ public class HealthSystem : MonoBehaviour {
 	void Update()
 	{
 		newtime = Time.time;
-		if(newtime - oldtime > 5){
+		if(newtime - oldtime > 2){
 			Hunger--;
 			oldtime = newtime;
 		}
