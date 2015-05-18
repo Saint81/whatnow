@@ -5,7 +5,7 @@ public class Connect : MonoBehaviour {
 
 	// Use this for initialization
 	IEnumerator Start () {
-		WWW www = new WWW("http://www.backworlds.com/whatnow/index.php?id=whatnow123&query=A or B&response0=Option A&response1=Option B");
+		WWW www = new WWW("http://tommyhtran.com/VotePage/index.php?id=whatnow123&query=A or B&response0=Option A&response1=Option B");
 		yield return www;
 		Debug.Log(www.text);
 	}

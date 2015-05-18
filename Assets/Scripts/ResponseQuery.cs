@@ -3,7 +3,7 @@ using System.Collections;
 
 public class ResponseQuery : MonoBehaviour {
 	
-	public string url = "http://www.backworlds.com/whatnow/index.php?id=whatnow123&getresponse=1";
+	public string url = "http://tommyhtran.com/VotePage/index.php?id=whatnow123&getresponse=1";
 	
 	public IEnumerator QueryResults()
 	{

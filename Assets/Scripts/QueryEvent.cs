@@ -25,7 +25,7 @@ public class QueryEvent {
 
 	public string GetURL()
 	{
-		return "http://www.backworlds.com/whatnow/?id=" + gameID;
+		return "http://tommyhtran.com/VotePage/?id=" + gameID;
 	}
 
 	public static QueryEvent Get()
