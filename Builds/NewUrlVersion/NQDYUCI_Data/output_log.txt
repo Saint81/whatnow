@@ -4,7 +4,7 @@ Direct3D:
     Version:  Direct3D 11.0 [level 11.0]
     Renderer: NVIDIA GeForce GTX 660   (ID=0x11c0)
     Vendor:   NVIDIA
-    VRAM:     1989 MB
+    VRAM:     1984 MB
 Begin MonoManager ReloadAssembly
 Platform assembly: E:\Desktop\whatnow\whatnow\Builds\NewUrlVersion\NQDYUCI_Data\Managed\UnityEngine.dll (this message is harmless)
 Loading E:\Desktop\whatnow\whatnow\Builds\NewUrlVersion\NQDYUCI_Data\Managed\UnityEngine.dll into Unity Child Domain
@@ -12,19 +12,19 @@ Platform assembly: E:\Desktop\whatnow\whatnow\Builds\NewUrlVersion\NQDYUCI_Data\
 Loading E:\Desktop\whatnow\whatnow\Builds\NewUrlVersion\NQDYUCI_Data\Managed\Assembly-CSharp.dll into Unity Child Domain
 Platform assembly: E:\Desktop\whatnow\whatnow\Builds\NewUrlVersion\NQDYUCI_Data\Managed\UnityEngine.UI.dll (this message is harmless)
 Loading E:\Desktop\whatnow\whatnow\Builds\NewUrlVersion\NQDYUCI_Data\Managed\UnityEngine.UI.dll into Unity Child Domain
-- Completed reload, in  0.037 seconds
+- Completed reload, in  0.110 seconds
 desktop: 1920x1080 60Hz; virtual: 3840x1080 at 0,0
 <RI> Initializing input.
 <RI> Input initialized.
 Platform assembly: E:\Desktop\whatnow\whatnow\Builds\NewUrlVersion\NQDYUCI_Data\Managed\System.Core.dll (this message is harmless)
 Platform assembly: E:\Desktop\whatnow\whatnow\Builds\NewUrlVersion\NQDYUCI_Data\Managed\System.dll (this message is harmless)
-UnloadTime: 1.565175 ms
+UnloadTime: 1.737282 ms
 Unloading 3 Unused Serialized files (Serialized files now loaded: 0 / Dirty serialized files: 0)
 
 Unloading 4 unused Assets to reduce memory usage. Loaded Objects now: 559.
-Total: 0.486823 ms (FindLiveObjects: 0.016247 ms CreateObjectMapping: 0.008725 ms MarkObjects: 0.117643 ms  DeleteObjects: 0.008725 ms)
+Total: 0.504275 ms (FindLiveObjects: 0.019256 ms CreateObjectMapping: 0.009026 ms MarkObjects: 0.117945 ms  DeleteObjects: 0.010831 ms)
 
-sent query https://students.ics.uci.edu/~tommyht1/VotePage/?id=anteater276&getresponse=1
+sent query https://students.ics.uci.edu/~tommyht1/VotePage/?id=anteater139&getresponse=1
  
 (Filename: C:/BuildAgent/work/d63dfc6385190b60/artifacts/StandalonePlayerGenerated/UnityEngineDebug.cpp Line: 49)
 
@@ -32,7 +32,7 @@ Query done!
  
 (Filename: C:/BuildAgent/work/d63dfc6385190b60/artifacts/StandalonePlayerGenerated/UnityEngineDebug.cpp Line: 49)
 
-sent query https://students.ics.uci.edu/~tommyht1/VotePage/?id=anteater276&query=map_031.png&response0=Building&response1=Car&response2=Corpse&response3=Kiosk
+sent query https://students.ics.uci.edu/~tommyht1/VotePage/?id=anteater139&query=map_024.png&response0=Building&response1=Car&response2=Corpse&response3=Kiosk&response4=Trashcan
  
 (Filename: C:/BuildAgent/work/d63dfc6385190b60/artifacts/StandalonePlayerGenerated/UnityEngineDebug.cpp Line: 49)
 
